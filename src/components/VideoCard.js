@@ -1,5 +1,5 @@
 import React from 'react'
-import { API_OPTIONS, TMDB_IMAGE } from '../utils/constants';
+import { getTmdbProxyUrl, TMDB_IMAGE } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNowPlayingTrailer } from '../utils/moviesSlice';
 import { toggleGptState } from '../utils/gptSlice';
@@ -13,7 +13,7 @@ const VideoCard = ({ movie }) => {
 
   async function handleClick() {
     if (nowPlayingTrailer.movie.id === id) return;
-    const videos = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, API_OPTIONS);
+    const videos = await fetch(getTmdbProxyUrl(`movie/${id}/videos`, { language: "en-US" }));
     const json = await videos.json();
     const filteredData = json.results.filter(movie => movie.type === "Trailer");
     const selectedVideo = filteredData.length ? filteredData[0] : json.results[0];

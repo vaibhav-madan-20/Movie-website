@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { API_OPTIONS, getMovieSearchUrl } from '../utils/constants';
+import { getMovieSearchUrl } from '../utils/constants';
 import LANGUAGE_CONSTANTS from "../utils/languageConstants";
 import { openai } from "../utils/openai";
 import { addGptMovies } from '../utils/gptSlice';
@@ -15,7 +15,7 @@ const GptSearch = () => {
 
   async function tmdbSearch(movie) {
     const url = getMovieSearchUrl(movie);
-    const promise = await fetch(url, API_OPTIONS);
+    const promise = await fetch(url);
     const json = await promise.json();
     return json.results;
   }
@@ -45,8 +45,8 @@ const GptSearch = () => {
 
       <div className="text-white bg-black mt-4">
         {gptMovies && gptMovies.flat(Infinity).length > 0 ? (gptNames.map((movie, index) => (
-            <VideoList key={movie} title={movie} movies={gptMovies[index]} />
-          ))) : null
+          <VideoList key={movie} title={movie} movies={gptMovies[index]} />
+        ))) : null
         }
       </div>
     </div>

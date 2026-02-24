@@ -3,15 +3,18 @@ export const USER_AVATAR = "https://occ-0-2590-2186.1.nflxso.net/dnm/api/v6/vN7b
 export const MOVIE_POSTER = "https://image.tmdb.org/t/p/w500/";
 export const TMDB_IMAGE = "https://image.tmdb.org/t/p/w500/";
 
-export const getMovieSearchUrl = (movie) => `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`;
-
-export const API_OPTIONS = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer ' + process.env.REACT_APP_TMDB_API_READ_ACCESS_TOKEN
-    },
+// Proxy helper: builds a URL through the Vercel serverless function
+export const getTmdbProxyUrl = (tmdbPath, params = {}) => {
+    const url = new URL("/api/tmdb", window.location.origin);
+    url.searchParams.set("path", tmdbPath);
+    for (const [key, value] of Object.entries(params)) {
+        url.searchParams.set(key, value);
+    }
+    return url.toString();
 };
+
+export const getMovieSearchUrl = (movie) =>
+    getTmdbProxyUrl("search/movie", { query: movie, include_adult: "false", language: "en-US", page: "1" });
 
 export const SUPPORTED_LANGUAGES = [
     { identifier: "en", name: "English" },

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { API_OPTIONS } from '../utils/constants'
+import { getTmdbProxyUrl } from '../utils/constants'
 import { addNowPlayingMovies } from "../utils/moviesSlice";
 
 const useNowPlayingMovies = () => {
@@ -15,8 +15,8 @@ const useNowPlayingMovies = () => {
             try {
                 const promises = [];
                 movieCategories.forEach(category => {
-                    const promise1 = fetch(`https://api.themoviedb.org/3/movie/${category}?region=IN`, API_OPTIONS);
-                    const promise2 = fetch(`https://api.themoviedb.org/3/movie/${category}?region=IN&page=2`, API_OPTIONS);
+                    const promise1 = fetch(getTmdbProxyUrl(`movie/${category}`, { region: "IN" }));
+                    const promise2 = fetch(getTmdbProxyUrl(`movie/${category}`, { region: "IN", page: "2" }));
                     promises.push(promise1);
                     promises.push(promise2);
                 });
@@ -28,7 +28,6 @@ const useNowPlayingMovies = () => {
                     if (!movies[category]) movies[category] = [];
                     movies[category] = movies[category].concat(data.results);
                 }
-                // console.log(movies);
                 dispatch(addNowPlayingMovies(movies));
             } catch (error) {
                 console.error("Error fetching movies:", error);

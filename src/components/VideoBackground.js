@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { API_OPTIONS } from '../utils/constants'
+import { getTmdbProxyUrl } from '../utils/constants'
 import { addNowPlayingTrailer } from '../utils/moviesSlice';
 
 const VideoBackground = ({ movie }) => {
@@ -10,7 +10,7 @@ const VideoBackground = ({ movie }) => {
 
   useEffect(() => {
     const getMovieTrailer = async () => {
-      const videos = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, API_OPTIONS);
+      const videos = await fetch(getTmdbProxyUrl(`movie/${id}/videos`, { language: "en-US" }));
       const json = await videos.json();
       const filteredData = json.results.filter(movie => movie.type === "Trailer");
       const selectedVideo = filteredData.length ? filteredData[0] : json.results[0];
