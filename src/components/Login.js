@@ -13,7 +13,7 @@ import { toggleGptState } from '../utils/gptSlice';
 
 const Login = () => {
     const dispatch = useDispatch();
-    const {gptState} = useSelector(store => store.gpt);
+    const { gptState } = useSelector(store => store.gpt);
 
     const [isLoginForm, setIsLoginForm] = useState(true);
     const name = useRef(null);
@@ -37,7 +37,7 @@ const Login = () => {
                 })
                 .then(() => updateProfile(auth.currentUser, { displayName: name.current.value, photoURL: USER_AVATAR }))
                 .then(() => {
-                    
+
                     // Profile updated!
                     gptState && dispatch(toggleGptState());
                     dispatch(addUser({ uid: user.uid, displayName: user.displayName, email: user.email, photoURL: user.photoURL }));
@@ -129,9 +129,9 @@ const Login = () => {
                     className="w-full p-3 mb-4 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600"
                 />}
                 <input
-                autoComplete='on'
+                    autoComplete='on'
                     ref={email}
-                    type="text"
+                    type="email"
                     placeholder="Email address"
                     className="w-full p-3 mb-4 bg-gray-800 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600"
                 />
@@ -164,11 +164,11 @@ const Login = () => {
 
                 <p
                     className="text-gray-400 mt-4 cursor-pointer hover:underline"
-                    onClick={() => {setIsLoginForm(!isLoginForm); setErrorMessage(null)}}
+                    onClick={() => { setIsLoginForm(!isLoginForm); setErrorMessage(null) }}
                 >{isLoginForm ? "New to Netflix? Sign Up" : "Already have an account? Sign In"}</p>
             </form>
         </div>
-        </>
+    </>
     );
 };
 export default Login;
