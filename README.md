@@ -1,5 +1,5 @@
-# Netflix GPT
-A netflix clone. Uses TMBI api to fetch movies data, youtube for displaying trailer and large language model(LLM) for searching movies.
+# Movie website
+A react based movie website resembling netflix frontend. Uses TMBI api to fetch movies data, youtube for displaying trailer and LLM for searching movies.
 
 ## Screenshots
 ![Login page](screenshots/2.png)
@@ -40,7 +40,7 @@ npm start
 ```
 
 ## Steps involved in creation of this app-
-- `npx create-react-app Netflix-GPT`
+- `npx create-react-app movie-website`
 - Configured TailwindCSS
 - Installed React Router DOM: `npm i -D react-router-dom`
 - Added Header component
@@ -83,5 +83,5 @@ npm start
 - GPT search bar
     - Movie suggestions
 
----
-When running the project, you may find an empty main page with no content. This is because [Indian Government has blocked access to some parts of IMDB.](https://www.themoviedb.org/talk/65d4b89ce640d6017dececac) You can change your DNS settings to workaround this.
+<!-- ---
+When running the project, you may find an empty main page with no content. This is because [Indian Government has blocked access to some parts of IMDB.](https://www.themoviedb.org/talk/65d4b89ce640d6017dececac) You can change your DNS settings to workaround this. -->

@@ -1,4 +1,4 @@
-export const openai = async (prompt)=>{
+export const openai = async (prompt) => {
     const p = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -6,13 +6,14 @@ export const openai = async (prompt)=>{
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "model": "deepseek/deepseek-chat:free",
+            "model": "openai/gpt-oss-120b:free",
             "messages": [
                 {
                     "role": "user",
                     "content": `Act as a movie recommendation system. Suggest some movies for the query: ${prompt}. Follow the format given ahead properly. Only give names of 5 movies, comma seperated like the example result given ahead. Follow this format strictly-3 Idiots, PK, Dangal, Kabir Singh, Joker`
                 }
-            ]
+            ],
+            "reasoning": { "enabled": true }
         })
     });
     const json = await p.json();
