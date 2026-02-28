@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -41,10 +41,8 @@ const Header = () => {
   }, [dispatch, navigate])
 
   function handleSignOut() {
-    signOut(auth).then(() => {
-      // console.log("Sign out button clicked");
-    }).catch((error) => {
-      // An error happened.
+    if (!window.confirm("Are you sure you want to sign out?")) return;
+    signOut(auth).catch((error) => {
       console.log(error);
     });
   }
@@ -58,7 +56,7 @@ const Header = () => {
     dispatch(changeLanguage(e.target.value))
   }
   return (
-    <div className={`relative top-0 left-0 w-screen pt-4 z-20 text-white flex ${!user ? "justify-center" : "justify-between"} items-center`}> 
+    <div className={`relative top-0 left-0 w-screen pt-4 z-20 text-white flex ${!user ? "justify-center" : "justify-between"} items-center`}>
       <div>
         <img src={logo_1}
           alt="netflix logo"
@@ -69,30 +67,30 @@ const Header = () => {
       </div>
       {user &&
         (
-        <div className="flex gap-2 items-center mr-8">
-          {gptState &&
-            (
-              <select
-                className="bg-black text-white text-center border border-zinc-500 md:px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                onChange={e => handleLanguageChange(e)}
-                defaultValue={selectedLanguage}
-              >
-                {SUPPORTED_LANGUAGES.map(language => (
-                  <option key={language.identifier} value={language.identifier} className="bg-black text-white">
-                    {language.name}
-                  </option>
-                ))}
-              </select>
-            )
-          }
+          <div className="flex gap-2 items-center mr-8">
+            {gptState &&
+              (
+                <select
+                  className="bg-black text-white text-center border border-zinc-500 md:px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  onChange={e => handleLanguageChange(e)}
+                  defaultValue={selectedLanguage}
+                >
+                  {SUPPORTED_LANGUAGES.map(language => (
+                    <option key={language.identifier} value={language.identifier} className="bg-black text-white">
+                      {language.name}
+                    </option>
+                  ))}
+                </select>
+              )
+            }
             <button className="font-bold bg-purple-500 text-white rounded-xl box-border px-4 py-2 m-2" onClick={toggleGptSearch}>{!gptState ? "GPT Search" : "Main page"}</button>
             <button
               className="font-bold bg-black text-white px-2 sm:px-4 py-2 rounded-lg border-2 box-border border-zinc-500 hover:bg-gray-800 transition duration-300"
               onClick={handleSignOut}
             >
-              (Sign out)
+              Sign out
             </button>
-        </div>
+          </div>
         )
       }
     </div>
