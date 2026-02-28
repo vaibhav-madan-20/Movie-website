@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getMovieSearchUrl } from '../utils/constants';
 import LANGUAGE_CONSTANTS from "../utils/languageConstants";
-import { openai } from "../utils/openai";
+import { askAI } from "../utils/gemini";
 import { addGptMovies } from '../utils/gptSlice';
 import VideoList from './VideoList';
 
@@ -27,7 +27,7 @@ const GptSearch = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await openai(value);
+      const result = await askAI(value);
       if (!result || result.length === 0) {
         setError("Couldn't get recommendations. Please try again.");
         setIsLoading(false);
